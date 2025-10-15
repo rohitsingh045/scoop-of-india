@@ -5,6 +5,7 @@ import { ArrowRight, Star, IceCream } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroCarousel from "@/components/HeroCarousel";
+import ProductCategories from "@/components/ProductCategories";
 
 const Home = () => {
   const featuredFlavors = [
@@ -31,6 +32,9 @@ const Home = () => {
       
       {/* Hero Carousel */}
       <HeroCarousel />
+
+      {/* Product Categories */}
+      <ProductCategories />
 
       {/* Featured Flavors */}
       <section className="container mx-auto px-4 py-20">
