@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Sparkles, IceCream, Star } from "lucide-react";
+import { ArrowRight, Star, IceCream } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import HeroCarousel from "@/components/HeroCarousel";
 
 const Home = () => {
   const featuredFlavors = [
@@ -11,19 +12,16 @@ const Home = () => {
       name: "Kesar Pista",
       description: "Royal saffron with crunchy pistachios",
       price: "₹120",
-      image: "/placeholder.svg"
     },
     {
       name: "Mango Kulfi",
       description: "Authentic Indian mango delight",
       price: "₹100",
-      image: "/placeholder.svg"
     },
     {
       name: "Rose Falooda",
       description: "Fragrant rose with vermicelli",
       price: "₹140",
-      image: "/placeholder.svg"
     },
   ];
 
@@ -31,46 +29,8 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-50"
-          style={{ background: "var(--gradient-hero)" }}
-        />
-        <div className="container mx-auto px-4 py-20 relative">
-          <div className="max-w-3xl mx-auto text-center space-y-6 animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-secondary/50 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span>Authentic Indian Ice Cream Experience</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground">
-              नमस्ते भारत
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-primary font-medium">
-              A smile in every scoop 🍨✨
-            </p>
-            
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experience the rich flavors of India with our handcrafted ice creams, 
-              made with love and authentic ingredients.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button asChild size="lg" className="rounded-full">
-                <Link to="/menu">
-                  Explore Menu
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full">
-                <Link to="/about">Learn More</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
       {/* Featured Flavors */}
       <section className="container mx-auto px-4 py-20">
