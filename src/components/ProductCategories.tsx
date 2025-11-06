@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IceCream, Coffee, Cake, Candy, Lollipop, PartyPopper, Tent } from "lucide-react";
-import ProductModal from "./ProductModal";
+import ProductCarousel from "./ProductCarousel";
 
 // Import product images
 import chocolateBar from "@/assets/products/chocolate-bar.png";
@@ -175,53 +175,64 @@ const categories = [
 
 const ProductCategories = () => {
   const [selectedCategory, setSelectedCategory] = useState<typeof categories[0] | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (selectedCategory && carouselRef.current) {
+      carouselRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [selectedCategory]);
 
   return (
-    <>
-      <section className="py-20 bg-gradient-to-br from-primary via-secondary to-accent">
-        <div className="container mx-auto px-4">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
-              Our Products
-            </h2>
-            <div className="w-24 h-1 bg-white mx-auto"></div>
-          </div>
-
-          {/* Categories Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-            {categories.map((category) => {
-              const IconComponent = category.icon;
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category)}
-                  className="group flex flex-col items-center gap-3 transition-transform hover:scale-110"
-                >
-                  <div 
-                    className={`w-20 h-20 md:w-24 md:h-24 rounded-full ${category.color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow`}
-                  >
-                    <IconComponent className="w-10 h-10 md:w-12 md:h-12 text-white" />
-                  </div>
-                  <span className="text-sm md:text-base font-semibold text-white text-center">
-                    {category.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+    <section className="py-20 bg-gradient-to-br from-primary via-secondary to-accent">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
+            Our Products
+          </h2>
+          <div className="w-24 h-1 bg-white mx-auto"></div>
         </div>
-      </section>
 
-      {/* Product Modal */}
-      {selectedCategory && (
-        <ProductModal
-          category={selectedCategory}
-          isOpen={!!selectedCategory}
-          onClose={() => setSelectedCategory(null)}
-        />
-      )}
-    </>
+        {/* Categories Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 mb-12">
+          {categories.map((category) => {
+            const IconComponent = category.icon;
+            const isSelected = selectedCategory?.id === category.id;
+            return (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category)}
+                className={`group flex flex-col items-center gap-3 transition-all ${
+                  isSelected ? "scale-110" : "hover:scale-110"
+                }`}
+              >
+                <div 
+                  className={`w-20 h-20 md:w-24 md:h-24 rounded-full ${category.color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow ${
+                    isSelected ? "ring-4 ring-white ring-offset-4 ring-offset-transparent" : ""
+                  }`}
+                >
+                  <IconComponent className="w-10 h-10 md:w-12 md:h-12 text-white" />
+                </div>
+                <span className="text-sm md:text-base font-semibold text-white text-center">
+                  {category.name}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Inline Product Carousel */}
+        <div ref={carouselRef} className="relative">
+          {selectedCategory && (
+            <ProductCarousel
+              category={selectedCategory}
+              onClose={() => setSelectedCategory(null)}
+            />
+          )}
+        </div>
+      </div>
+    </section>
   );
 };
 
