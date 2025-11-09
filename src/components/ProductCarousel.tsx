@@ -18,9 +18,10 @@ interface Category {
 interface ProductCarouselProps {
   category: Category;
   onClose: () => void;
+  categoryColor: string;
 }
 
-const ProductCarousel = ({ category, onClose }: ProductCarouselProps) => {
+const ProductCarousel = ({ category, onClose, categoryColor }: ProductCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -48,7 +49,22 @@ const ProductCarousel = ({ category, onClose }: ProductCarouselProps) => {
   }, [emblaApi]);
 
   return (
-    <div className="w-full bg-gradient-to-br from-primary via-secondary to-accent rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl animate-scale-in border-4 border-white/20 backdrop-blur-sm">
+    <div className={`w-full ${categoryColor} rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl animate-scale-in border-4 border-white/20 backdrop-blur-sm relative`}>
+      {/* Decorative leaf elements */}
+      <div className="absolute top-4 right-4 md:top-8 md:right-16 opacity-20 pointer-events-none">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" className="animate-float">
+          <path d="M60 20C60 20 40 40 40 60C40 70 45 80 60 80C75 80 80 70 80 60C80 40 60 20 60 20Z" fill="white" fillOpacity="0.3"/>
+          <path d="M60 20C60 20 50 35 45 50" stroke="white" strokeWidth="2" strokeOpacity="0.3"/>
+          <path d="M60 20C60 20 70 35 75 50" stroke="white" strokeWidth="2" strokeOpacity="0.3"/>
+        </svg>
+      </div>
+      <div className="absolute bottom-4 left-4 md:bottom-8 md:left-16 opacity-20 pointer-events-none rotate-180">
+        <svg width="100" height="100" viewBox="0 0 120 120" fill="none" className="animate-float" style={{ animationDelay: '1s' }}>
+          <path d="M60 20C60 20 40 40 40 60C40 70 45 80 60 80C75 80 80 70 80 60C80 40 60 20 60 20Z" fill="white" fillOpacity="0.3"/>
+          <path d="M60 20C60 20 50 35 45 50" stroke="white" strokeWidth="2" strokeOpacity="0.3"/>
+        </svg>
+      </div>
+      
       {/* Close Button */}
       <Button
         variant="ghost"

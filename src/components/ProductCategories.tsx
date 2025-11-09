@@ -238,10 +238,11 @@ const ProductCategories = () => {
 
         {/* Inline Product Carousel */}
         <div ref={carouselRef} className="relative">
-          {selectedCategory && (
+        {selectedCategory && (
             <ProductCarousel
               category={selectedCategory}
               onClose={() => setSelectedCategory(null)}
+              categoryColor={selectedCategory.color}
             />
           )}
         </div>
